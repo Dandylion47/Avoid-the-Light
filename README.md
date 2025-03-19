@@ -1,0 +1,1 @@
+A game where you are a prisoner escaping a prison. The guard watchtowers have searchlights that restart the player at the beginning. The goal for the players is to reach the end and exit the prison. TODO: add movment to the learch light and create wall prefabs for the player to hide behind. 
