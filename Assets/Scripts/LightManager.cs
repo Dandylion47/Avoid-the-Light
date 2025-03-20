@@ -10,8 +10,6 @@ public class LightManager : MonoBehaviour
     public float radius;
     public float angle;
 
-    public float delay;
-
     public GameObject playerRef;
 
     public LayerMask targetMask;
@@ -30,13 +28,7 @@ public class LightManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canSeePlayer)
-        {
-            fieldOfViewCheck();
-        } else
-        {
-            
-        }
+
     }
 
     private void fieldOfViewCheck()
@@ -56,7 +48,7 @@ public class LightManager : MonoBehaviour
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
                 //Start a raycast, "Physics.Raycast"
                 //from the centre of the lightsource, "transform.position"
-                //Air the raycast towards player "direction to target"
+                //Aim the raycast towards player "direction to target"
                 //Limit raycast length to "distanceToTarget"
                 //Stop Raycast if it collides with "obstructionMask"
                 if (Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
