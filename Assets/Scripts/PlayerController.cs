@@ -6,13 +6,13 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    //Movment 
+    //movement 
     public float moveSpeed = 6;
     private Rigidbody rb;
 
     //Vector3 to store the players location at all times. This was we can accelerate
     //Velocity
-    private Vector3 movment;
+    private Vector3 movement;
 
     //Jump Force
     public float jumpHeight = 20f;
@@ -37,13 +37,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Check the ground with function
+        /*//Check the ground with function
         isGrounded = checkGround();
 
         if (isGrounded)
         {
-            Jump();
-        }
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                Sprint();
+            }
+        }*/
     }
     bool checkGround()
     {
@@ -70,16 +73,16 @@ public class PlayerController : MonoBehaviour
 
     void movePlayer(float hSpeed, float vSpeed)
     {
-        //Set the movment vector to vSpeed * transford.forward + hSpeed * transform.right
-        movment = (transform.forward * vSpeed) + (transform.right * hSpeed);
+        //Set the movement vector to vSpeed * transford.forward + hSpeed * transform.right
+        movement = (transform.forward * vSpeed) + (transform.right * hSpeed);
 
         //Normalized stops player from accelerating when holding two buttons
-        movment = movment.normalized * moveSpeed * Time.deltaTime;
+        movement = movement.normalized * moveSpeed * Time.deltaTime;
 
-        rb.MovePosition(transform.position + movment);
+        rb.MovePosition(transform.position + movement);
     }
 
-    void Jump()
+    /*void Sprint()
     {
         //Input for jump
         if (Input.GetKeyDown(KeyCode.Space))
@@ -88,5 +91,5 @@ public class PlayerController : MonoBehaviour
             //ForceMode.Impulse means "right away"
             rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
         }
-    }
+    }*/
 }

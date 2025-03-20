@@ -10,41 +10,36 @@ public class LightManager : MonoBehaviour
     public float radius;
     public float angle;
 
+    public float delay;
+
     public GameObject playerRef;
 
     public LayerMask targetMask;
     public LayerMask obstructionMask;
 
     public bool canSeePlayer;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
-        //Not totally sure what a Core routine does but this is how the video did it
-        //Would love an explanation in class if its not any trouble
-        StartCoroutine(FOVRoutine());
     }
 
     // Update is called once per frame
     void Update()
     {
-
-    }
-
-    private IEnumerator FOVRoutine()
-    {
-        float delay = 0.2f;
-        //Delay the search for a set number of seconds
-        WaitForSeconds wait = new WaitForSeconds(0.2f);
-
-        while (true)
+        if (canSeePlayer)
         {
-            yield return wait;
-            fieldOfVeiwCheck();
+            fieldOfViewCheck();
+        } else
+        {
+            
         }
     }
 
-    private void fieldOfVeiwCheck()
+    private void fieldOfViewCheck()
     {
         //Layermask looks at a perticular Layer to search for objects
         //Then put player on its own Layer, in this case targetMask
@@ -75,7 +70,7 @@ public class LightManager : MonoBehaviour
             {
                 canSeePlayer = false;
             }
-        //If you were previously in veiw but dropped it, it should be disconected
+        //If you were previously in view but dropped it, it should be disconected
         } else if (canSeePlayer)
         {
             canSeePlayer = false;
