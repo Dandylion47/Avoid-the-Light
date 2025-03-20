@@ -6,13 +6,13 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    //Movement variables
+    //Movment 
     public float moveSpeed = 6;
     private Rigidbody rb;
 
-    //Vector3 (XYZ) to store the players location at all times. This was we can accelerate
+    //Vector3 to store the players location at all times. This was we can accelerate
     //Velocity
-    private Vector3 movement;
+    private Vector3 movment;
 
     //Jump Force
     public float jumpHeight = 20f;
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         //Initialize the rigidbody thus giving it a variable value
         rb = GetComponent<Rigidbody>();
 
-        //Freeze all rotations on the rigid body
+        //Freeze all fotations on the ridgid body
         rb.freezeRotation = true;
 
         //Make cursor invisible while playing game. ESC key to release.
@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
     }
-   
     bool checkGround()
     {
         RaycastHit hit;
@@ -72,14 +71,14 @@ public class PlayerController : MonoBehaviour
     void movePlayer(float hSpeed, float vSpeed)
     {
         //Set the movment vector to vSpeed * transford.forward + hSpeed * transform.right
-        movement = (transform.forward * vSpeed) + (transform.right * hSpeed);
+        movment = (transform.forward * vSpeed) + (transform.right * hSpeed);
 
         //Normalized stops player from accelerating when holding two buttons
-        movement = moveSpeed * Time.deltaTime * movement.normalized;
+        movment = movment.normalized * moveSpeed * Time.deltaTime;
 
-        rb.MovePosition(transform.position + movement);
+        rb.MovePosition(transform.position + movment);
     }
-  
+
     void Jump()
     {
         //Input for jump
