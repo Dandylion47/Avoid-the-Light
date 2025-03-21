@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LightManager : MonoBehaviour
@@ -8,9 +9,8 @@ public class LightManager : MonoBehaviour
     //https://www.youtube.com/watch?v=j1-OyLo77ss
     //Variables for range of light and motion
     public float radius;
+    [Range(0, 360)]
     public float angle;
-
-    public float delay;
 
     public GameObject playerRef;
 
@@ -19,61 +19,53 @@ public class LightManager : MonoBehaviour
 
     public bool canSeePlayer;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
+        StartCoroutine(FOVRoutine());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canSeePlayer)
+        if (canSeePlayer)   //This bool determins what happens to the player upon contact with the light
         {
-            fieldOfViewCheck();
-        } else
-        {
-            
+            Destroy(playerRef); //This destroys the player but I want to switch it to removing a life and respawning the player
         }
     }
 
-    private void fieldOfViewCheck()
+    private IEnumerator FOVRoutine()
     {
-        //Layermask looks at a perticular Layer to search for objects
-        //Then put player on its own Layer, in this case targetMask
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
+        WaitForSeconds wait = new WaitForSeconds(0.2f); //This determins amount of time in view before triggering the check
 
-        //Only check the first layer of array because there is only the player
+        while (true)
+        {
+            yield return wait;
+            fieldOfViewCheck();
+        }
+    }
+
+    private void fieldOfViewCheck() //This function manages all the viewcone interactions
+    {
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
         if (rangeChecks.Length != 0)
         {
             Transform target = rangeChecks[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
-
             if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
             {
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
-                //Start a raycast, "Physics.Raycast"
-                //from the centre of the lightsource, "transform.position"
-                //Air the raycast towards player "direction to target"
-                //Limit raycast length to "distanceToTarget"
-                //Stop Raycast if it collides with "obstructionMask"
-                if (Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
-                {
+
+                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                     canSeePlayer = true;
-                } else
-                {
+                else
                     canSeePlayer = false;
-                }
-            } else
-            {
-                canSeePlayer = false;
             }
-        //If you were previously in view but dropped it, it should be disconected
-        } else if (canSeePlayer)
-        {
-            canSeePlayer = false;
+            else
+                canSeePlayer = false;
         }
+        else if (canSeePlayer)
+            canSeePlayer = false;
     }
 }
