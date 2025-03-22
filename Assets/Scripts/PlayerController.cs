@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         //Initialize the rigidbody thus giving it a variable value
         rb = GetComponent<Rigidbody>();
 
-        //Freeze all fotations on the ridgid body
+        //Freeze all rotations on the rigid body
         rb.freezeRotation = true;
 
         //Make cursor invisible while playing game. ESC key to release.
@@ -48,9 +48,9 @@ public class PlayerController : MonoBehaviour
             }
         }*/
     }
-    bool checkGround()
+    /* bool checkGround()
     {
-        RaycastHit hit;
+      RaycastHit hit;
 
         //Draw a ray downward. Out hit means "Where do I store the result?"
         if (Physics.Raycast(transform.position, Vector3.down, out hit, groundCheckLength, groundLayer))
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
             return true;
         }
         return false;
-    }
+    }*/
 
     //Update at fixed interval rather than each frame
     private void FixedUpdate()

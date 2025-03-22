@@ -29,24 +29,25 @@ public class LightManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canSeePlayer)   //This bool determins what happens to the player upon contact with the light
+        if (canSeePlayer)   //This bool determines what happens to the player upon contact with the light
         {
-            Destroy(playerRef); //This destroys the player but I want to switch it to removing a life and respawning the player
+            
+            Destroy(playerRef); //This destroys the player but I want to switch it to removing a life and respawning the player. Will need to decrease pub int playerLives and then restart the scene?
         }
     }
 
     private IEnumerator FOVRoutine()
     {
-        WaitForSeconds wait = new WaitForSeconds(0.2f); //This determins amount of time in view before triggering the check
+        WaitForSeconds wait = new(0.2f); //This determines amount of time in view before triggering the check. Kinda like coyote time. 
 
         while (true)
         {
             yield return wait;
-            fieldOfViewCheck();
+            FieldOfViewCheck();
         }
     }
 
-    private void fieldOfViewCheck() //This function manages all the viewcone interactions
+    private void FieldOfViewCheck() //This function manages all the viewcone interactions to gate the various conditions for canSeePlayer.
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
         if (rangeChecks.Length != 0)
