@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     //----------TODO----------//
+    // Jack, Tyler 196700610 | Nic Hill #--------
     //Setup a main menu and end game screen and connect them through the game manager
     public static GameManager instance;
 
